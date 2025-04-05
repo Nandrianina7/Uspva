@@ -1,50 +1,59 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Box, Button, FormControl, IconButton, Input, InputAdornment, inputBaseClasses, InputLabel, TextField } from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface IPops {}
 
 type FormData = {
   email: string;
   password: string;
-}
+};
 const Signin: React.FC<IPops> = () => {
-  const [ formData, setFormData ] = useState<FormData>({
+  const [formData, setFormData] = useState<FormData>({
     email: '',
-    password: ''
-  })
-  const [ showPassword, setShowPassword ] = useState<boolean>(false)
+    password: '',
+  });
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target
-    setFormData(prev => ({
+    const { value, name } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
   const handleClick = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log(formData);
-    
-  }
+  };
   const handlePassword = () => {
-    setShowPassword(show => !show)
-  }
+    setShowPassword((show) => !show);
+  };
   return (
-    <Box 
-      display='flex' 
-      flexDirection='column' 
-      width={500} 
-      height='70vh'
-      justifyContent='center' 
-      alignItems='center' 
+    <Box
+      display="flex"
+      flexDirection="column"
+      width={800}
+      height="60vh"
+      justifyContent="center"
+      alignItems="center"
       gap={1}
       paddingLeft={10}
-      pt={5}
-
     >
-      <Box display='flex' flexDirection='column' width='100%' component='form' gap={1} >
+      <Box
+        display="flex"
+        flexDirection="column"
+        width="60%"
+        component="form"
+        gap={1}
+      >
         <label>Email</label>
-        <TextField 
+        <TextField
           id="email"
           type="email"
           variant="outlined"
@@ -56,14 +65,14 @@ const Signin: React.FC<IPops> = () => {
         <label>Password</label>
         <TextField
           id="pasword"
-          type={showPassword ? 'text':'password'} 
-          name="password" 
+          type={showPassword ? 'text' : 'password'}
+          name="password"
           label="Password"
           value={formData.password}
           onChange={handleInput}
           slotProps={{
             input: {
-              endAdornment:(
+              endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     aria-label={
@@ -71,30 +80,29 @@ const Signin: React.FC<IPops> = () => {
                     }
                     onClick={handlePassword}
                   >
-                    {showPassword ? <VisibilityOff />: <Visibility />}
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              )
-            }
-          }}          
+              ),
+            },
+          }}
         />
       </Box>
-      <Button 
-        variant="contained" 
-        style={{ 
-          width: '50%', 
-          borderRadius: '20px'
-        }} 
+      <Button
+        variant="contained"
+        sx={{
+          width: '50%',
+          borderRadius: 20,
+        }}
         onClick={handleClick}
       >
         Signin
       </Button>
-      <Box width='100%' justifyContent='center' alignItems='flex-start'>
+      <Box width="60%" justifyContent="center" alignItems="flex-start">
         <p>Forgot password</p>
       </Box>
     </Box>
-    
-  )
-}
+  );
+};
 
 export default Signin;
