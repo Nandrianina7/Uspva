@@ -1,3 +1,3 @@
-import SigninLAyout from "./SigninLayout";
+import SigninLAyout from './SigninLayout';
 
 export default SigninLAyout;

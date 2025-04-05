@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
-import Signin from './Components/Signin';
+
+import SigninLAyout from './Components/SigninLayout';
 
 function App() {
-  return (
-    <Signin />
-  );
+  return <SigninLAyout />;
 }
 
 export default App;
