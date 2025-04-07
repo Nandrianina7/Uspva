@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import useValidEmail from '../Hooks/useValidEmail';
+import axios from 'axios';
 
 interface IPops {}
 
@@ -39,7 +40,13 @@ const Signin: React.FC<IPops> = () => {
     setIsClicked(true);
     const validPassword = formData.password.length >= 6;
     if (validEmail && validPassword) {
+      axios.post('http://localhost:5432/api/signin', formData)
+        .then(res => console.log(res)
+        )
+        .catch(err => console.log(err)
+        )
       console.log(formData);
+      
     } else {
       console.log('Error');
     }
