@@ -40,7 +40,7 @@ const Signin: React.FC<IPops> = () => {
     setIsClicked(true);
     const validPassword = formData.password.length >= 6;
     if (validEmail && validPassword) {
-      axios.post('http://localhost:5432/api/signin', formData)
+      axios.post('http://localhost:5000/api/signin', formData)
         .then(res => console.log(res)
         )
         .catch(err => console.log(err)
