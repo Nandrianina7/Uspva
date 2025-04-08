@@ -41,8 +41,12 @@ const Signin: React.FC<IPops> = () => {
     const validPassword = formData.password.length >= 6;
     if (validEmail && validPassword) {
       axios.post('http://localhost:5000/api/signin', formData)
-        .then(res => console.log(res)
-        )
+        .then(res => {
+          const { acces_token, data } = res.data
+          localStorage.setItem('access_token', acces_token)
+          console.log(data);
+          
+        })
         .catch(err => console.log(err)
         )
       console.log(formData);
