@@ -1,5 +1,5 @@
 from flask import Blueprint
-from .SignIn import signin as signin_controller  # ⚠️ évite la récursion
+from .SignIn import signin as signin_controller
 
 api = Blueprint('api', __name__)
 
