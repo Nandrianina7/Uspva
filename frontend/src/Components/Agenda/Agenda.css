@@ -1,0 +1,58 @@
+.agenda-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .agenda-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .agenda-container form input,
+  .agenda-container form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .agenda-container form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .agenda-container form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .agenda-container form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .fc {
+    margin-top: 30px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  .fc .fc-toolbar-title {
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
