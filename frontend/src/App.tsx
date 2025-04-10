@@ -2,6 +2,7 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './Components/Home';
 import SigninLAyout from './Components/SigninLayout';
 import Layout from './Components/Layouts';
+import Agenda from './Components/Agenda';
 // import Agenda from './Components/Agenda';
 const router = createHashRouter([
   {
@@ -14,6 +15,10 @@ const router = createHashRouter([
       {
         path: '/home',
         element: <Home />,
+      },
+      {
+        path: '/Agenda',
+        element: <Agenda />,
       },
     ],
   },

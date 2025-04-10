@@ -1,3 +1,6 @@
+/* Agenda.css */
+
+/* Style général */
 .agenda-container {
   max-width: 900px;
   margin: 40px auto;
@@ -8,12 +11,25 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* En mode sombre, changer le fond du container */
+body[data-theme='dark'] .agenda-container {
+  background-color: #1c1c1c; /* Fond sombre */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); /* Ombre plus claire en mode sombre */
+}
+
+/* Titre de l'agenda */
 .agenda-container h2 {
   text-align: center;
   margin-bottom: 30px;
   color: #333;
 }
 
+/* Mode sombre pour le titre */
+body[data-theme='dark'] .agenda-container h2 {
+  color: #f5f5f5; /* Titre plus clair en mode sombre */
+}
+
+/* Formulaire */
 .agenda-container form input,
 .agenda-container form textarea {
   width: 100%;
@@ -24,11 +40,21 @@
   font-size: 1rem;
 }
 
+/* Formulaire en mode sombre */
+body[data-theme='dark'] .agenda-container form input,
+body[data-theme='dark'] .agenda-container form textarea {
+  background-color: #333; /* Fond sombre pour les inputs */
+  color: white; /* Texte clair */
+  border-color: #444; /* Bordure plus foncée */
+}
+
+/* Textarea avec taille minimum */
 .agenda-container form textarea {
   resize: vertical;
   min-height: 80px;
 }
 
+/* Boutons */
 .agenda-container form button {
   background-color: #007bff;
   color: #fff;
@@ -40,10 +66,18 @@
   transition: background-color 0.3s ease;
 }
 
+/* Changer la couleur du bouton au survol */
 .agenda-container form button:hover {
   background-color: #0056b3;
 }
 
+/* En mode sombre, changer la couleur du bouton */
+body[data-theme='dark'] .agenda-container form button {
+  background-color: #3e8e41;
+  border-color: #3c763d;
+}
+
+/* FullCalendar */
 .fc {
   margin-top: 30px;
   background-color: #fafafa;
@@ -51,7 +85,79 @@
   padding: 10px;
 }
 
+/* FullCalendar en mode sombre */
+body[data-theme='dark'] .fc {
+  background-color: #2c2c2c; /* Fond sombre pour le calendrier */
+  color: white; /* Texte en blanc */
+}
+
 .fc .fc-toolbar-title {
   font-size: 1.4rem;
   color: #333;
 }
+
+/* Mode sombre pour le titre du calendrier */
+body[data-theme='dark'] .fc .fc-toolbar-title {
+  color: #f5f5f5; /* Titre clair en mode sombre */
+}
+
+/* Couleur des numéros de jour dans le calendrier */
+.fc .fc-daygrid-day-number {
+  color: #333;
+}
+
+/* Numéros de jours en mode sombre */
+body[data-theme='dark'] .fc .fc-daygrid-day-number {
+  color: #e0e0e0 !important; /* Couleur des numéros en gris clair pour le mode sombre */
+}
+
+/* Couleur des événements */
+.fc-event {
+  background-color: #1e88e5;
+  border: none;
+  color: white;
+}
+
+/* Événements en mode sombre */
+body[data-theme='dark'] .fc-event {
+  background-color: #1976d2; /* Event plus sombre en mode sombre */
+}
+
+/* Titre des champs de formulaire */
+.agenda-container form h3 {
+  color: #333;
+}
+
+/* En mode sombre, changer la couleur du titre du formulaire */
+body[data-theme='dark'] .agenda-container form h3 {
+  color: #f5f5f5; /* Titre du formulaire en clair */
+}
+
+/* Mode sombre pour les jours de la semaine (Lundi, Mardi, etc.) */
+body[data-theme='dark'] .fc .fc-day-header {
+  color: #f5f5f5; /* Couleur claire pour les noms des jours */
+  background-color: #333; /* Fond sombre pour les noms des jours */
+  border-color: #444; /* Bordure plus foncée pour les jours */
+  font-weight: bold;
+}
+
+/* Mode sombre pour les cellules des jours de la semaine */
+body[data-theme='dark'] .fc .fc-day-header .fc-day-header-cell {
+  color: #f5f5f5; /* Texte clair */
+}
+
+/* Mode sombre pour les jours de la semaine (Lundi, Mardi, etc.) */
+body[data-theme='dark'] .fc .fc-day-header,
+body[data-theme='dark'] .fc .fc-day-header .fc-day-header-cell {
+  color: #f5f5f5 !important; /* Couleur claire pour les noms des jours */
+  background-color: #333 !important; /* Fond sombre pour les noms des jours */
+  border-color: #444; /* Bordure plus foncée pour les jours */
+  font-weight: bold;
+}
+
+/* Effet de survol sur les jours de la semaine */
+body[data-theme='dark'] .fc .fc-day-header .fc-day-header-cell:hover {
+  background-color: #555; /* Fond sombre plus clair au survol */
+  color: #ffffff !important; /* Texte encore plus clair au survol */
+}
+

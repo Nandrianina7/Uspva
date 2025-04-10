@@ -97,3 +97,4 @@ class Event(db.Model):
     date = db.Column(db.Date)
     check = db.Column(db.Boolean, default=False)
     observation = db.Column(db.String(255))
+    id_user = db.Column(db.Integer, db.ForeignKey('users.id_users'))
