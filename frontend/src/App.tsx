@@ -1,22 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './Components/Navbar';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './Components/Home';
 import SigninLAyout from './Components/SigninLayout';
-import Agenda from './Components/Agenda';
-
+import Layout from './Components/Layouts';
+// import Agenda from './Components/Agenda';
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <SigninLAyout />,
+  },
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: '/home',
+        element: <Home />,
+      },
+    ],
+  },
+]);
 function App() {
-  return (
-    <Router>
-      <Navbar />
-      <div style={{ padding: '20px'}}>
-        <Routes>
-          <Route path='/' element={ <Home/> }></Route>
-          <Route path='/SigninLayout' element={ <SigninLAyout/> }></Route>
-          <Route path='/Agenda' element={<Agenda />}></Route>
-        </Routes>
-      </div>
-    </Router>
-  )
+  return <RouterProvider router={router} />;
 }
 
 export default App;
