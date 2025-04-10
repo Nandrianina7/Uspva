@@ -1,7 +1,9 @@
 
 from flask import Blueprint, request, jsonify
 from ..models import db, User
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, create_refresh_token
+from datetime import timedelta
+ACCESS_EXPIRE = timedelta(minutes=1)
 def signin():
     """
     Sign in a user and return a JWT token.
@@ -25,6 +27,23 @@ def signin():
         "birthday": user.date_naiss,
         "email": user.email
     }
-    access_token = create_access_token(user_data)
+    access_token = create_access_token(identity=str(user.id_users))
+    refresh_token = create_refresh_token(identity=str(user.id_users), expires_delta=None)
+    resp = jsonify({"data": user_data, "acces_token": access_token, "refresh_token": refresh_token})
+    resp.set_cookie(
+        'access_token_cookie', 
+        access_token, 
+        httponly=True, 
+        samesite='None', 
+        secure=True, 
+        max_age=ACCESS_EXPIRE.total_seconds()
+    )
+    resp.set_cookie(
+        'refresh_token_cookie',
+        refresh_token,
+        httponly=True,
+        samesite="None",
+        secure=True
+    )
     
-    return jsonify({"data": user_data, "acces_token": access_token}), 200
+    return resp, 200

@@ -10,6 +10,7 @@ import {
 import { ChangeEvent, FormEvent, useState } from 'react';
 import useValidEmail from '../Hooks/useValidEmail';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface IPops {}
 
@@ -28,6 +29,7 @@ const Signin: React.FC<IPops> = () => {
   const isPasswordNull =
     isClicked && (formData.password === '' || formData.password.length < 6);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigateTo = useNavigate();
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormData((prev) => ({
@@ -40,17 +42,19 @@ const Signin: React.FC<IPops> = () => {
     setIsClicked(true);
     const validPassword = formData.password.length >= 6;
     if (validEmail && validPassword) {
-      axios.post('http://localhost:5000/api/signin', formData)
-        .then(res => {
-          const { acces_token, data } = res.data
-          localStorage.setItem('access_token', acces_token)
-          console.log(data);
-          
+      axios
+        .post('http://localhost:5000/api/signin', formData, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
         })
-        .catch(err => console.log(err)
-        )
+        .then((res) => {
+          const { acces_token, data } = res.data;
+          localStorage.setItem('access_token', acces_token);
+          console.log(data, acces_token);
+          navigateTo('/home');
+        })
+        .catch((err) => console.log(err));
       console.log(formData);
-      
     } else {
       console.log('Error');
     }
