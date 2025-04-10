@@ -1,3 +1,3 @@
-import { ColorModeProvider } from "./ColorModeProvider";
+import { ColorModeProvider } from './ColorModeProvider';
 
-export default ColorModeProvider;   
+export default ColorModeProvider;
