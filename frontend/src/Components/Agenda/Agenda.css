@@ -160,3 +160,22 @@ body[data-theme='dark'] .fc .fc-day-header .fc-day-header-cell:hover {
   background-color: #555; /* Fond sombre plus clair au survol */
   color: #ffffff !important; /* Texte encore plus clair au survol */
 }
+
+.agenda-container {
+  padding: 20px;
+}
+
+.agenda-container .event-form {
+  margin-bottom: 20px;
+}
+
+.agenda-container > div {
+  display: flex;
+  gap: 20px;
+}
+
+.agenda-container > div > div {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+}

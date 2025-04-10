@@ -1,14 +1,42 @@
-import React, { useState } from 'react';
-import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import React, { useState } from 'react';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
 
 const Agenda = () => {
   const [events, setEvents] = useState([
-    // Exemple d'événements
-    { id_event: 1, name_event: 'Réunion', date: '2025-04-10', observation: 'Réunion importante' },
-    { id_event: 2, name_event: 'Atelier', date: '2025-04-12', observation: 'Atelier de développement' },
+    {
+      id_event: 1,
+      name_event: 'Réunion',
+      date: '2025-04-10',
+      observation: 'Réunion importante',
+    },
+    {
+      id_event: 2,
+      name_event: 'Atelier',
+      date: '2025-04-12',
+      observation: 'Atelier de développement',
+    },
   ]);
   const [showForm, setShowForm] = useState(false);
   const [nameEvent, setNameEvent] = useState('');
@@ -34,56 +62,68 @@ const Agenda = () => {
     setObservation('');
   };
 
+  console.log(
+    'Événements pour FullCalendar :',
+    events.map((event) => ({
+      title: event.name_event,
+      date: event.date,
+    })),
+  );
+
+  console.log('Événements pour le tableau :', events);
+
   return (
     <div className="agenda-container">
       <h2>Mon Agenda</h2>
-
       {showForm && (
-        <form onSubmit={handleSubmit} className="event-form">
-          <h3>Ajouter un événement pour le {selectedDate}</h3>
-          <input
-            type="text"
-            placeholder="Nom de l'événement"
-            value={nameEvent}
-            onChange={(e) => setNameEvent(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Observation"
-            value={observation}
-            onChange={(e) => setObservation(e.target.value)}
-          />
-          <div style={{ marginTop: '10px' }}>
-            <button type="submit">Ajouter</button>
-            <button
-              type="button"
+        <Dialog
+          open={showForm}
+          onClose={() => setShowForm(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle>Ajouter un événement</DialogTitle>
+          <DialogContent>
+            <Typography variant="subtitle1" gutterBottom>
+              Ajouter un événement pour le {selectedDate}
+            </Typography>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Nom de l'événement"
+              value={nameEvent}
+              onChange={(e) => setNameEvent(e.target.value)}
+              required
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Observation"
+              multiline
+              rows={4}
+              value={observation}
+              onChange={(e) => setObservation(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleSubmit} variant="contained" color="primary">
+              Ajouter
+            </Button>
+            <Button
               onClick={() => setShowForm(false)}
-              style={{ marginLeft: '10px' }}
+              variant="outlined"
+              color="secondary"
             >
               Annuler
-            </button>
-          </div>
-        </form>
+            </Button>
+          </DialogActions>
+        </Dialog>
       )}
 
-      <Grid container spacing={3}>
-        {/* Grid gauche - FullCalendar */}
-        <Grid item xs={12} md={6}>
-          <FullCalendar
-            plugins={[dayGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            locale="fr"
-            events={events.map((event) => ({
-              title: event.name_event,
-              date: event.date,
-            }))}
-            dateClick={handleDateClick}
-            height="auto"
-          />
-        </Grid>
-
-        {/* Grid droite - Liste d'événements sous forme de tableau */}
-        <Grid item xs={12} md={6}>
+      {/* Conteneur en flexbox */}
+      <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+        {/* Colonne gauche - Liste des événements */}
+        <div style={{ flex: 1 }}>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -104,8 +144,23 @@ const Agenda = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
-      </Grid>
+        </div>
+
+        {/* Colonne droite - Calendrier */}
+        <div style={{ flex: 0.7 }}>
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            locale="fr"
+            events={events.map((event) => ({
+              title: event.name_event,
+              date: event.date,
+            }))}
+            dateClick={handleDateClick}
+            height="auto"
+          />
+        </div>
+      </div>
     </div>
   );
 };
