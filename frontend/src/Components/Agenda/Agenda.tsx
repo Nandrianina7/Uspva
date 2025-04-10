@@ -1,65 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import './Agenda.css';
 
-interface EventType {
-  id_event: number;
-  name_event: string;
-  date: string;
-  observation: string;
-}
-
-const Agenda: React.FC = () => {
-  const [events, setEvents] = useState<EventType[]>([]);
-  const [nameEvent, setNameEvent] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [observation, setObservation] = useState('');
+const Agenda = () => {
+  const [events, setEvents] = useState([
+    // Exemple d'événements
+    { id_event: 1, name_event: 'Réunion', date: '2025-04-10', observation: 'Réunion importante' },
+    { id_event: 2, name_event: 'Atelier', date: '2025-04-12', observation: 'Atelier de développement' },
+  ]);
   const [showForm, setShowForm] = useState(false);
+  const [nameEvent, setNameEvent] = useState('');
+  const [observation, setObservation] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/events');
-      setEvents(res.data);
-    } catch (err) {
-      console.error('Erreur lors de la récupération des événements :', err);
-    }
-  };
-
-  const handleDateClick = (arg: { dateStr: string }) => {
-    setSelectedDate(arg.dateStr);
+  const handleDateClick = (date: any) => {
+    setSelectedDate(date.dateStr);
     setShowForm(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const newEvent = {
-        name_event: nameEvent,
-        date: selectedDate,
-        observation,
-      };
-
-      // Affichage de l'événement dans la console avant l'envoi
-      console.log('Nouvel événement ajouté :', newEvent);
-
-      // Envoi de l'événement au backend
-      await axios.post('http://localhost:5000/events', newEvent);
-
-      setNameEvent('');
-      setObservation('');
-      setSelectedDate('');
-      setShowForm(false);
-      fetchEvents();
-    } catch (err) {
-      console.error('Erreur lors de l’ajout de l’événement :', err);
-    }
+    const newEvent = {
+      id_event: events.length + 1,
+      name_event: nameEvent,
+      date: selectedDate,
+      observation,
+    };
+    setEvents([...events, newEvent]);
+    setShowForm(false);
+    setNameEvent('');
+    setObservation('');
   };
 
   return (
@@ -67,7 +39,7 @@ const Agenda: React.FC = () => {
       <h2>Mon Agenda</h2>
 
       {showForm && (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="event-form">
           <h3>Ajouter un événement pour le {selectedDate}</h3>
           <input
             type="text"
@@ -81,24 +53,59 @@ const Agenda: React.FC = () => {
             value={observation}
             onChange={(e) => setObservation(e.target.value)}
           />
-          <button type="submit">Ajouter</button>
-          <button type="button" onClick={() => setShowForm(false)} style={{ marginLeft: '10px' }}>
-            Annuler
-          </button>
+          <div style={{ marginTop: '10px' }}>
+            <button type="submit">Ajouter</button>
+            <button
+              type="button"
+              onClick={() => setShowForm(false)}
+              style={{ marginLeft: '10px' }}
+            >
+              Annuler
+            </button>
+          </div>
         </form>
       )}
 
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        locale="fr"
-        events={events.map(event => ({
-          title: event.name_event,
-          date: event.date,
-        }))}
-        dateClick={handleDateClick}
-        height="auto"
-      />
+      <Grid container spacing={3}>
+        {/* Grid gauche - FullCalendar */}
+        <Grid item xs={12} md={6}>
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            locale="fr"
+            events={events.map((event) => ({
+              title: event.name_event,
+              date: event.date,
+            }))}
+            dateClick={handleDateClick}
+            height="auto"
+          />
+        </Grid>
+
+        {/* Grid droite - Liste d'événements sous forme de tableau */}
+        <Grid item xs={12} md={6}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nom de l'événement</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Observation</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {events.map((event) => (
+                  <TableRow key={event.id_event}>
+                    <TableCell>{event.name_event}</TableCell>
+                    <TableCell>{event.date}</TableCell>
+                    <TableCell>{event.observation}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </div>
   );
 };
