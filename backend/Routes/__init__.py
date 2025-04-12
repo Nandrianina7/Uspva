@@ -5,7 +5,13 @@ from .refreshToken import refresh as token_refresh
 from .getUser import getUserData
 from .Event import addEvent as add_event_controller
 from .Event import get_events as get_event_controller
+from .Signup import signup as signup_user
+
 api = Blueprint('api', __name__)
+
+@api.route('/signup', methods=['POST'])
+def signup():
+    return signup_user()
 
 @api.route('/signin', methods=['POST'])
 def signin():
